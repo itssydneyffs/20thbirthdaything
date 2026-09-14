@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#19151f">
+<meta name="description" content="Three sealed gifts. One very suspicious birthday. A classified investigation for Marwan, from Syd.">
+<title>The Marwan File — A birthday investigation</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="content.js">
+</script>
+<script defer src="app.js">
+</script>
+</head>
+<body>
+<div class="draft">SYD’S WORKING PREVIEW <span>Personal trivia + gifts will be added before the birthday.</span>
+</div>
+<header>
+<a class="wordmark" href="./" aria-label="The Marwan File home">
+<span class="mark">M.</span> THE MARWAN FILE</a>
+<span class="classification">PRIVATE CORRESPONDENCE <span class="red-square">
+</span>
+</span>
+</header>
+<div class="layout">
+<aside>
+<div class="file-label">BIRTHDAY INVESTIGATIONS UNIT</div>
+<h1>A case worth<br>celebrating.</h1>
+<div class="subject">
+<span class="avatar">M</span>
+<div>
+<span class="meta">SUBJECT / 001</span>
+<strong>Marwan</strong>
+<span class="handler">Assigned handler: Syd</span>
+</div>
+</div>
+<nav aria-label="Case files" id="stages">
+</nav>
+<div class="clue-record">
+<span class="meta">RECOVERED VAULT DIGITS</span>
+<div id="digits" aria-live="polite">
+</div>
+<p>Keep these. Nothing here is a coincidence.<br>Except the wrong answers.</p>
+</div>
+<div class="aside-bottom">
+<span>CASE STATUS</span>
+<strong id="case-status">Investigation open</strong>
+</div>
+</aside>
+<main id="main" tabindex="-1">
+</main>
+</div>
+<footer>
+<span>FILE REF. MW–0412 <span class="footer-divider">/</span> PREPARED BY SYD</span>
+<button id="restart" class="text-button">Restart investigation</button>
+</footer>
+<dialog id="reward">
+<div class="modal-top">
+<span class="meta">EVIDENCE RELEASED</span>
+<button id="close-reward" class="close" aria-label="Close reward">×</button>
+</div>
+<div id="reward-body">
+</div>
+</dialog>
+<dialog id="reset">
+<span class="meta">REOPEN THE CASE?</span>
+<h2>Start from the beginning?</h2>
+<p>This clears your progress for this playthrough.</p>
+<div class="actions">
+<button id="cancel-reset" class="secondary">Keep investigating</button>
+<button id="confirm-reset" class="primary">Restart</button>
+</div>
+</dialog>
+</body>
+</html>
