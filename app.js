@@ -40,7 +40,15 @@ function vault(){if(state.done){main.innerHTML=title(3,'Case closed. Birthday of
  $('#vault-form').onsubmit=e=>{e.preventDefault();if($('#vault-input').value.trim()!==CASE.vault){$('#vault-feedback').textContent='The vault remains unimpressed. Check your recovered digits.';return}state.done=true;state.completed=3;chrome();showGift(2,()=>render(true))};$('#vault-hint').onclick=()=>{$('#vault-hint-text').textContent='Your recovered digits are 7, then 2, then 9. Enter 729.'};
 }
 function go(stage){state.stage=stage;render(true)}
-function openModal(html,next){$('#reward-body').innerHTML=html;rewardNext=next||null;if(!reward.open)reward.showModal();if($('#modal-next'))$('#modal-next').onclick=()=>reward.close()}
+function openModal(html, next) {
+  $('#reward-body').innerHTML = html;
+  rewardNext = next || null;
+  reward.style.maxHeight = '85vh';
+  reward.style.overflowY = 'auto';
+  if (!reward.open) reward.showModal();
+  reward.scrollTop = 0;
+  if ($('#modal-next')) $('#modal-next').onclick = () => reward.close();
+}
 
 // Insert personal writing as text, never executable HTML.
 function escapeHtml(value) {
@@ -56,15 +64,33 @@ function videoSource(value) {
   return '';
 }
 
+// Drive viewing pages open in a new tab; they are not direct video files.
+function videoPageSource(value) {
+  try {
+    const url = new URL(String(value || ''));
+    if (url.protocol === 'https:' && url.hostname === 'drive.google.com' && /^\/file\/d\/[A-Za-z0-9_-]+\/view$/.test(url.pathname)) {
+      return url.href;
+    }
+  } catch (_) {
+    // A missing viewing link leaves direct-video support available below.
+  }
+  return '';
+}
+
 function giftContent(index) {
   const gift = CASE.gifts[index];
+  const videoPage = videoPageSource(gift.videoPageUrl);
+  if (index === 0 && videoPage) {
+    return '<div class="actions"><a class="primary" style="display:inline-block;text-decoration:none" href="' + escapeHtml(videoPage) + '" target="_blank" rel="noopener noreferrer">Open your memories video</a></div>' +
+      '<p class="fine-print">Opens in a new tab. Come back here when you are ready to continue.</p>';
+  }
   const video = videoSource(gift.videoUrl);
   if (index === 0 && video) {
     return '<video class="memories-video" controls playsinline preload="metadata" src="' + escapeHtml(video) + '">Your browser cannot play this video.</video>' +
       '<p><a href="' + escapeHtml(video) + '" target="_blank" rel="noopener">Open the memories video</a></p>';
   }
   if (index === 1 && gift.paragraphs && gift.paragraphs.length) {
-    return '<div class="friendship-letter">' + gift.paragraphs.map(p => '<p>' + escapeHtml(p) + '</p>').join('') + '</div>';
+    return '<div class="friendship-letter">' + gift.paragraphs.map(p => '<p style="white-space:pre-line">' + escapeHtml(p) + '</p>').join('') + '</div>';
   }
   if (index === 2 && !CASE.preview) {
     return '<div class="delivery-note">' + escapeHtml(gift.deliveryMessage) + '</div>';
